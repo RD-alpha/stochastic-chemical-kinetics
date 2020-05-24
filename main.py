@@ -9,11 +9,16 @@ from matplotlib.lines import Line2D
 import os
 import argparse
 
-#defining arguments to point to path of config file
+#defining arguments to point to path of config file, activate quiet mode and overwrite save settings.
 
 parser = argparse.ArgumentParser(description='A stochastic simulator of chemical kinetics')
 parser.add_argument('config_path',
-                   help='Location of config file. The default is config.txt in the root directory',nargs='?')
+                   help='location of config file. The default is config.txt in the root directory',nargs='?')
+parser.add_argument('-q','--quiet',action='store_true',
+                   help='quiet mode, does not print runs as they are caclulated')
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-s", "--save", action="store_true", help='saves output graph as image file regardless of config instructions')
+group.add_argument("-n", "--nosave", action="store_true",help='does not save image file regardless of config instructions')
 args=parser.parse_args()
 if args.config_path:
     configPath=args.config_path
@@ -215,7 +220,8 @@ for d in range(0, runs):
     data, used = runSim(Tf, maxEvents, n0, randomData[numbersUsed:numbersUsed + maxEvents])
     rawData[d] = data.T
     numbersUsed += used
-    print("Run " + str(d + 1) + "/" + str(runs) + " completed")
+    if not args.quiet:
+        print("Run " + str(d + 1) + "/" + str(runs) + " completed")
 
 # generate histogram
 if histogramDraw:
@@ -261,7 +267,8 @@ if histogramDraw:
         ax2.hist(histogramData[i + 1], binCount[i], orientation="horizontal", alpha=0.8)
     ax2.set_title('Final conditions over all the runs')
 
-if save:
+if save and not args.nosave:
     plt.savefig('Images\\' + str(seed) + '.png')
-
+elif args.save:
+    plt.savefig('Images\\' + str(seed) + '.png')
 plt.show()

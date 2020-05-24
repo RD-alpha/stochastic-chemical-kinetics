@@ -53,7 +53,7 @@ scatter = False
 lines = 40
 
 # boolean - draw histogram of amounts at the end of the simulations
-histogramAmounts = True
+histogramDraw = True
 # scalar - number of bins for each species, all separated by commas
 bincounts = 40
 
