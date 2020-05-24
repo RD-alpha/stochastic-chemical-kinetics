@@ -62,4 +62,4 @@ bincounts= 10 ,10,10,10
 histogramDraw=True
 
 #save to its own png file? name is the seed used. Saved to a folder called 'Images' in the same directory
-save = True
+save = False

@@ -7,7 +7,18 @@ import sys
 import configparser
 from matplotlib.lines import Line2D
 import os
+import argparse
 
+#defining arguments to point to path of config file
+
+parser = argparse.ArgumentParser(description='A stochastic simulator of chemical kinetics')
+parser.add_argument('config_path',
+                   help='Location of config file. The default is config.txt in the root directory',nargs='?')
+args=parser.parse_args()
+if args.config_path:
+    configPath=args.config_path
+else:
+    configPath='config.txt'
 # ------------
 # reading from config.txt
 # -------------
@@ -27,8 +38,9 @@ import os
 # should be larger than the time needed to reach Tf
 
 path = '/'.join((os.path.abspath(__file__).replace('\\', '/')).split('/')[:-1])
+adjusted_path = configPath.replace('\\', '/')
 config = configparser.ConfigParser()
-config.read(os.path.join(path,'config.txt'))
+config.read('/'.join([path,adjusted_path]))
 
 varNames = np.array(config['parameters']['varNames'].split(','))
 c = np.array(list(map(float, config['parameters']['c'].split(','))))
