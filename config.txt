@@ -41,6 +41,7 @@ seed = -1
 # segmentCount - scalar - number of segments x axis is divided into
 # percent - scalar - percent of the longest run to graph, ends of 100% can be noisy
 # as not many runs reach that far
+
 averages = True
 segmentCount = 50
 percent = 99
@@ -54,10 +55,11 @@ scatter = False
 # draw individual runs as lines
 lines = 1
 
-# boolean - draw histogram of amounts at the end of the simulations
-histogramAmounts = True
-# scalar - number of bins for each species, all separated by commas
-bincounts = 5, 5, 5, 5
+#how many bins
+bincounts= 10 ,10,10,10
+
+#determine whether to draw histogram
+histogramDraw=True
 
 #save to its own png file? name is the seed used. Saved to a folder called 'Images' in the same directory
 save = True

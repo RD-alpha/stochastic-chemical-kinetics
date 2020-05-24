@@ -53,7 +53,7 @@ seed = int(config['parameters']['seed'])
 averages = config['parameters'].getboolean('averages')
 deviations = config['parameters'].getboolean('deviations')
 scatter = config['parameters'].getboolean('scatter')
-histogramAmounts = config['parameters'].getboolean('histogramAmounts')
+histogramDraw = config['parameters'].getboolean('histogramDraw')
 
 segmentCount = int(config['parameters']['segmentCount'])
 percent = float(config['parameters']['percent'])
@@ -206,7 +206,7 @@ for d in range(0, runs):
     print("Run " + str(d + 1) + "/" + str(runs) + " completed")
 
 # generate histogram
-if histogramAmounts:
+if histogramDraw:
     histogramData = getEndings(rawData, runs, s)
 
 # join all the runs together
@@ -216,7 +216,7 @@ data = np.concatenate(rawData, axis=1)
 processedData = splitData(data, s, segmentCount, percent)
 
 # plot results
-if histogramAmounts:
+if histogramDraw:
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, gridspec_kw={'width_ratios': [3, 1]})
 else:
     fig, ax1 = plt.subplots(1, 1)
@@ -244,7 +244,7 @@ ax1.legend(customLines, varNames)
 ax1.set(xlabel="Time", ylabel='Number of molecules')
 ax1.set_title('Runs: ' + str(runs) + '     Seed used: ' + str(seed))
 
-if histogramAmounts:
+if histogramDraw:
     for i in range(0, s):
         ax2.hist(histogramData[i + 1], binCount[i], orientation="horizontal", alpha=0.8)
     ax2.set_title('Final conditions over all the runs')
